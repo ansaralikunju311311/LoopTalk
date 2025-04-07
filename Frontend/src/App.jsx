@@ -1,11 +1,8 @@
-import React from 'react'
-import Landing from './Pages/User/Landing'
-const App = () => {
-  return (
-    <div>
-      <Landing />
-    </div>
-  )
-}
+import React from "react";
+import Landing from "./Pages/User/Landing";
 
-export default App
+const App = () => {
+  return <Landing />;
+};
+
+export default App;
