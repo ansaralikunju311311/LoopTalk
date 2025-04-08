@@ -1,17 +1,57 @@
 import React from "react";
-import TheamToggle from "../../components/TheamToggle";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComments } from '@fortawesome/free-solid-svg-icons';
+
 
 const Landing = () => {
   return (
-    <div className="min-h-screen p-8">
-      <div className="flex justify-end">
-        <TheamToggle />
+    <div className="bg-gradient-to-b from-fuchsia-950 to-gray-950 min-h-screen">
+      <div className=" flex items-center justify-between mb-5 sm:mb-10 h-16 px-6 sm:px-12 md:px-24 lg:px-32">
+        <div className="flex items-center gap-3">
+          <img
+            src="/LoopTalk-Logo.png"
+            alt="LoopTalk Logo"
+            className="h-8 w-auto"
+          />
+          <p className="text-2xl text-white font-semibold">LoopTalk</p>
+        </div>
+        <div className="flex gap-10">
+          <p>Home</p>
+          <p>About</p>
+        </div>
+        <button className="outline outline-gray-100 p-1 px-6 rounded-full hover:outline-fuchsia-900">
+          login
+        </button>
       </div>
 
-      <h1 className="text-4xl font-bold mb-4">Welcome to LoopTalk</h1>
-      <p className="text-lg text-gray-700 dark:text-gray-300">
-        Real talk, no filters. Meet strangers, connect, chat, and build friendships across the world.
-      </p>
+      <div
+        className="flex flex-col md:flex-row items-center justify-between gap-8 sm:pt-5 md:pt-10 lg:pt-20 px-4 md:px-16 min-[1000px]:px-24 lg:px-32
+
+"
+      >
+        <div className="flex-1 bg-slate-700 p-1 sm:p-2 md:p-4 lg:p-6 md:h-[500px] rounded-lg">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+          Where real minds meet real talks – LoopTalk.
+          </h1>
+          <p className="text-base md:text-xl text-gray-300">
+            Real talk, no filters. Connect with strangers from around the world,
+            have meaningful conversations, share ideas, and build genuine
+            friendships. LoopTalk is where open minds meet and real connections
+            begin.
+          </p>
+          <div className="flex justify-center mt-10">
+        
+            <button className="bg-fuchsia-900 p-4 rounded-full hover:bg-fuchsia-950 transition-colors duration-300">
+               <FontAwesomeIcon icon={faComments} className="text-white text-2xl mr-5" />
+               Start Chatting  
+            </button>
+          </div>
+        </div>
+
+        <div className="flex-1 bg-orange-800 h-[500px] rounded-lg flex items-center justify-center text-white text-xl">
+          image
+        </div>
+      </div>
     </div>
   );
 };

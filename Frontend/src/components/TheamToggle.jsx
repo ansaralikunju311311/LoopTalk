@@ -1,5 +1,5 @@
 import React from "react";
-import { useDarkMode } from "../context/TheamSwitcher";
+import { useDarkMode } from "../context/ThemeContext";
 
 const TheamToggle = () => {
   const { darkMode, setDarkMode } = useDarkMode();
@@ -9,7 +9,7 @@ const TheamToggle = () => {
       onClick={() => setDarkMode(!darkMode)}
       className="px-4 py-2 rounded bg-gray-800 text-white dark:bg-gray-200 dark:text-black"
     >
-      {darkMode ? "Light Mode" : "Dark Mode"}
+      {darkMode ? "☀️" : "🌙"}
     </button>
   );
 };

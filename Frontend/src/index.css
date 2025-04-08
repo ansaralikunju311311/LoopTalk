@@ -2,11 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Apply global background and text color */
+/* Reset margins */
+html,
 body {
-  @apply bg-white text-black transition-all duration-300;
+  @apply m-0;
 }
 
-.dark body {
-  @apply bg-black text-white;
+/* Light theme default */
+body {
+  @apply bg-white text-black transition-colors duration-300;
+}
+
+/* Dark theme activated when html has .dark */
+html.dark body {
+  @apply bg-gray-950 text-white;
 }
