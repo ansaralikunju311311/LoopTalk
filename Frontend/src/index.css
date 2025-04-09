@@ -8,12 +8,3 @@ body {
   @apply m-0;
 }
 
-/* Light theme default */
-body {
-  @apply bg-white text-black transition-colors duration-300;
-}
-
-/* Dark theme activated when html has .dark */
-html.dark body {
-  @apply bg-gray-950 text-white;
-}

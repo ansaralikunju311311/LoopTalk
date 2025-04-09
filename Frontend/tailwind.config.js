@@ -6,7 +6,16 @@ export default {
   ],
   darkMode: 'class',  
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        bgSide: "#070707",
+        bgChat: "#282828",
+      }
+    },
+    
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar')
+
+  ],
 }
