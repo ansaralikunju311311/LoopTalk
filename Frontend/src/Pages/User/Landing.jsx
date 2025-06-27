@@ -29,7 +29,7 @@ import {
   Email, 
   Lock 
 } from '@mui/icons-material';
-import Register from '../User/Register.jsx';
+import Register from './Register.jsx';
 
 // Styled Components
 const Section = styled(Box)(({ theme }) => ({
@@ -126,7 +126,7 @@ const users = [
   { _id: '4', name: 'Sarah Lee', email: 'sarah@example.com', role: 'Marketing Specialist' },
   { _id: '5', name: 'David Kim', email: 'david@example.com', role: 'Frontend Developer' },
 ];
-
+import Login from './Login.jsx'
 const Landing = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
@@ -199,7 +199,7 @@ const Landing = () => {
               <StyledButton
                 variant="outlined"
                 size="large"
-                // startIcon={<Login />}
+                // startIcon={<Register />}
                 onClick={() => setIsLogin(true)}
                 sx={{
                   color: '#fff',
@@ -332,137 +332,15 @@ const Landing = () => {
         </Container>
       </Section>
 
-      {/* Login Dialog */}
-      <Dialog 
+<Login 
         open={isLogin} 
         onClose={() => setIsLogin(false)}
-        maxWidth="sm"
-        fullWidth
-        PaperProps={{
-          sx: {
-            borderRadius: '16px',
-            background: 'linear-gradient(145deg, #ffffff 0%, #f9f9f9 100%)',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-            overflow: 'hidden',
-          },
+        onSwitchToRegister={() => {
+          setIsLogin(false);
+          setRegisterOpen(true);
         }}
-      >
-        <Box sx={{ p: 3, position: 'relative' }}>
-          <IconButton 
-            onClick={() => setIsLogin(false)}
-            sx={{
-              position: 'absolute',
-              top: 8,
-              right: 8,
-              color: 'text.secondary',
-            }}
-          >
-            <Close />
-          </IconButton>
-          
-          <Box sx={{ textAlign: 'center', mb: 3 }}>
-            <Typography 
-              variant="h4" 
-              component="h2" 
-              sx={{ 
-                fontWeight: 'bold',
-                mb: 1,
-                background: 'linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              Welcome Back!
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              Sign in to continue to LoopTalk
-            </Typography>
-          </Box>
-          
-          <Box component="form" sx={{ mt: 2 }}>
-            <TextField
-              fullWidth
-              label="Email Address"
-              margin="normal"
-              variant="outlined"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Email color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              fullWidth
-              label="Password"
-              type="password"
-              margin="normal"
-              variant="outlined"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Lock color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Button
-              fullWidth
-              variant="contained"
-              size="large"
-              sx={{
-                mt: 3,
-                mb: 2,
-                py: 1.5,
-                background: 'linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)',
-                '&:hover': {
-                  background: 'linear-gradient(45deg, #3a7bd5 0%, #00d1ff 100%)',
-                },
-              }}
-            >
-              Sign In
-            </Button>
-          </Box>
-          
-          <Box sx={{ textAlign: 'center', mt: 2 }}>
-            <Button size="small" sx={{ textTransform: 'none' }}>
-              Forgot password?
-            </Button>
-          </Box>
-          
-          <Divider sx={{ my: 3 }}>
-            <Typography variant="caption" color="text.secondary">OR</Typography>
-          </Divider>
-          
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 2 }}>
-            <IconButton sx={{ bgcolor: '#4267B2', color: 'white', '&:hover': { bgcolor: '#3b5998' } }}>
-              <Facebook />
-            </IconButton>
-            <IconButton sx={{ bgcolor: '#1DA1F2', color: 'white', '&:hover': { bgcolor: '#1a91da' } }}>
-              <Twitter />
-            </IconButton>
-            <IconButton sx={{ bgcolor: '#0A66C2', color: 'white', '&:hover': { bgcolor: '#0959a8' } }}>
-              <LinkedIn />
-            </IconButton>
-          </Box>
-          
-          <Typography variant="body2" color="text.secondary" align="center">
-            Don't have an account?{' '}
-            <Button 
-              color="primary" 
-              size="small" 
-              onClick={() => {
-                setIsLogin(false);
-                setRegisterOpen(true);
-              }}
-              sx={{ textTransform: 'none', p: 0, minWidth: 'auto' }}
-            >
-              Sign Up
-            </Button>
-          </Typography>
-        </Box>
-      </Dialog>
+      />
+
 
       {/* Register Dialog */}
       <Register 

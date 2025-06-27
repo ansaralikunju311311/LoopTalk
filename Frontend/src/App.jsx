@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route,Routes } from 'react-router-dom'
-import Landing from './assets/Pages/User/Landing'
+import Landing from './Pages/User/Landing'
 
 const App = () => {
   return (
