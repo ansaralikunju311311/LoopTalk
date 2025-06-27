@@ -1,17 +1,16 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Landing from "./Pages/User/Landing";
-import Chat from "./Pages/User/Chat";
+import React from 'react'
+import { Route,Routes } from 'react-router-dom'
+import Landing from './assets/Pages/User/Landing'
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/chat" element={<Chat />} />
-      </Routes>
-    </Router>
-  );
-};
+    <div>
+        <Routes>
+            <Route path="/" element={<Landing/>}/>
+            {/* <Route path="/login" element={<Login/>}/> */}
+        </Routes>
+    </div>
+  )
+}
 
-export default App;
+export default App
