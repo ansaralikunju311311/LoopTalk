@@ -1,22 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Typography, Button, Container, Paper, Grid, Avatar, Card, IconButton } from '@mui/material';
+import { 
+  Box, 
+  Typography, 
+  Button, 
+  Container, 
+  Grid, 
+  Avatar, 
+  IconButton, 
+  Dialog, 
+  DialogTitle, 
+  DialogContent, 
+  TextField, 
+  InputAdornment, 
+  Divider 
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { People, Chat, ConnectWithoutContact, ArrowForward, Facebook, Twitter, LinkedIn, Instagram, Login, PersonAdd } from '@mui/icons-material';
+import { 
+  People, 
+  Chat, 
+  ConnectWithoutContact, 
+  ArrowForward, 
+  Facebook, 
+  Twitter, 
+  LinkedIn, 
+  PersonAdd, 
+  Close, 
+  Email, 
+  Lock 
+} from '@mui/icons-material';
+import Register from '../User/Register.jsx';
 
-// const Section = styled(Box)(({ theme }) => ({
-//   padding: theme.spacing(8, 0,)
-//   [theme.breakpoints.up('md')]:{
-//     padding: theme.spacing(12, 0)
-//   }
-// }));
+// Styled Components
 const Section = styled(Box)(({ theme }) => ({
-    padding: theme.spacing(8, 0), // ✅ fixed here
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(12, 0),
-    },
-  }));
-  
+  padding: theme.spacing(8, 0),
+  [theme.breakpoints.up('md')]: {
+    padding: theme.spacing(12, 0),
+  },
+}));
 
 const HeroSection = styled(Section)(({ theme }) => ({
   minHeight: '100vh',
@@ -58,47 +79,6 @@ const CommunitySidebar = styled(Box)(({ theme }) => ({
   },
 }));
 
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(6, 4),
-  borderRadius: '16px',
-  maxWidth: '1200px',
-  width: '100%',
-  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-  backdropFilter: 'blur(10px)',
-  boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-  margin: '0 auto',
-}));
-
-const FeatureCard = styled(Card)(({ theme }) => ({
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: theme.spacing(4, 2),
-  borderRadius: '16px',
-  background: 'rgba(255, 255, 255, 0.05)',
-  backdropFilter: 'blur(10px)',
-  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-  '&:hover': {
-    transform: 'translateY(-8px)',
-    boxShadow: '0 12px 20px rgba(0, 0, 0, 0.2)',
-  },
-}));
-
-const UserCard = styled(Card)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: theme.spacing(3),
-  borderRadius: '16px',
-  background: 'rgba(255, 255, 255, 0.05)',
-  backdropFilter: 'blur(10px)',
-  transition: 'transform 0.3s ease',
-  '&:hover': {
-    transform: 'translateY(-5px)',
-  },
-}));
-
 const StyledButton = styled(Button)(({ theme }) => ({
   margin: theme.spacing(1, 1.5),
   padding: theme.spacing(1.5, 4),
@@ -120,11 +100,12 @@ const GradientText = styled('span')({
   fontWeight: 'bold',
 });
 
+// Data
 const features = [
   {
     icon: <People sx={{ fontSize: 50, color: '#4facfe', mb: 2 }} />,
     title: 'Connect',
-    description: 'Find and connect with like-minded people who share your interests and passions.'
+    description: 'Find and connect with like-minded people who share your interests.'
   },
   {
     icon: <Chat sx={{ fontSize: 50, color: '#4facfe', mb: 2 }} />,
@@ -138,24 +119,28 @@ const features = [
   }
 ];
 
-// Dummy user data
 const users = [
   { _id: '1', name: 'Alex Johnson', email: 'alex@example.com', role: 'UI/UX Designer' },
   { _id: '2', name: 'Maria Garcia', email: 'maria@example.com', role: 'Software Engineer' },
   { _id: '3', name: 'James Wilson', email: 'james@example.com', role: 'Product Manager' },
   { _id: '4', name: 'Sarah Lee', email: 'sarah@example.com', role: 'Marketing Specialist' },
   { _id: '5', name: 'David Kim', email: 'david@example.com', role: 'Frontend Developer' },
-  { _id: '6', name: 'Emma Watson', email: 'emma@example.com', role: 'Backend Developer' },
 ];
 
-console.log(users)
-
 const Landing = () => {
+  const [isLogin, setIsLogin] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
+
   return (
     <Box>
       {/* Hero Section with Community Sidebar */}
       <HeroSection>
-        <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, alignItems: 'center', gap: 4 }}>
+        <Container maxWidth="lg" sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', lg: 'row' }, 
+          alignItems: 'center', 
+          gap: 4 
+        }}>
           <HeroContent>
             <Typography 
               variant="h2" 
@@ -185,14 +170,20 @@ const Landing = () => {
               and build meaningful relationships in a safe and welcoming environment.
             </Typography>
             
-            <Box sx={{ mt: 4, display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: { xs: 'center', lg: 'flex-start' } }}>
+            <Box sx={{ 
+              mt: 4, 
+              display: 'flex', 
+              flexWrap: 'wrap', 
+              gap: 2, 
+              justifyContent: { xs: 'center', lg: 'flex-start' } 
+            }}>
               <StyledButton
-                component={Link}
-                to="/login"
                 variant="contained"
                 size="large"
-                startIcon={<Login />}
+                startIcon={<PersonAdd />}
+                onClick={() => setRegisterOpen(true)}
                 sx={{
+                  color: '#fff',
                   background: 'linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)',
                   '&:hover': {
                     background: 'linear-gradient(45deg, #3a7bd5 0%, #00d1ff 100%)',
@@ -200,27 +191,28 @@ const Landing = () => {
                   fontSize: '1.1rem',
                   px: 5,
                 }}
+                endIcon={<ArrowForward />}
               >
-                Login
+                Get Started
               </StyledButton>
+              
               <StyledButton
-                component={Link}
-                to="/register"
                 variant="outlined"
                 size="large"
+                // startIcon={<Login />}
+                onClick={() => setIsLogin(true)}
                 sx={{
                   color: '#fff',
-                  borderColor: '#fff',
+                  borderColor: 'rgba(255, 255, 255, 0.5)',
                   '&:hover': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
                     borderColor: '#fff',
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
                   },
                   fontSize: '1.1rem',
                   px: 5,
                 }}
-                endIcon={<ArrowForward />}
               >
-                Register
+                Login
               </StyledButton>
             </Box>
           </HeroContent>
@@ -230,7 +222,7 @@ const Landing = () => {
               Our <GradientText>Community</GradientText>
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              {users.slice(0, 5).map((user) => (
+              {users.map((user) => (
                 <Box 
                   key={user._id}
                   sx={{
@@ -248,57 +240,48 @@ const Landing = () => {
                   }}
                 >
                   <Avatar 
-                    sx={{ 
-                      width: 48, 
-                      height: 48, 
-                      bgcolor: '#4facfe',
-                      color: '#fff',
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    {user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
-                  </Avatar>
-                  <Box sx={{ flexGrow: 1, minWidth: 0 }}>
-                    <Typography variant="subtitle2" sx={{ color: '#fff', fontWeight: 'bold' }} noWrap>
+                    src={`https://i.pravatar.cc/150?u=${user._id}`}
+                    alt={user.name}
+                    sx={{ width: 48, height: 48 }}
+                  />
+                  <Box sx={{ flex: 1 }}>
+                    <Typography variant="subtitle2" sx={{ color: '#fff', fontWeight: 'medium' }}>
                       {user.name}
                     </Typography>
-                    <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.7)' }} noWrap>
+                    <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
                       {user.role}
                     </Typography>
                   </Box>
-                  <IconButton 
+                  <Button 
+                    variant="outlined" 
                     size="small"
                     sx={{
-                      color: '#4facfe',
-                      backgroundColor: 'rgba(79, 172, 254, 0.1)',
+                      color: '#fff',
+                      borderColor: 'rgba(255, 255, 255, 0.3)',
                       '&:hover': {
-                        backgroundColor: 'rgba(79, 172, 254, 0.2)',
+                        borderColor: '#fff',
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)'
                       },
-                    }}
-                    aria-label={`Connect with ${user.name}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      // Handle connect action here
-                      console.log(`Connecting with ${user.name} (${user._id})`);
+                      textTransform: 'none',
+                      fontSize: '0.75rem',
+                      px: 2,
+                      py: 0.5,
                     }}
                   >
-                    <PersonAdd fontSize="small" />
-                  </IconButton>
+                    Connect
+                  </Button>
                 </Box>
               ))}
             </Box>
             <Button
-              component={Link}
-              to="/register"
-              fullWidth
-              variant="contained"
-              size="small"
+              variant="text"
+              endIcon={<ArrowForward />}
               sx={{
-                mt: 3,
-                background: 'rgba(255, 255, 255, 0.1)',
+                mt: 2,
+                color: 'rgba(255, 255, 255, 0.7)',
                 '&:hover': {
-                  background: 'rgba(255, 255, 255, 0.2)',
+                  color: '#fff',
+                  backgroundColor: 'transparent',
                 },
               }}
             >
@@ -317,79 +300,179 @@ const Landing = () => {
           <Grid container spacing={4}>
             {features.map((feature, index) => (
               <Grid item xs={12} md={4} key={index}>
-                <FeatureCard>
+                <Box
+                  sx={{
+                    p: 4,
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    background: '#fff',
+                    borderRadius: '16px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)',
+                    },
+                  }}
+                >
                   {feature.icon}
-                  <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold', mt: 2 }}>
                     {feature.title}
                   </Typography>
-                  <Typography variant="body1" color="text.secondary" align="center">
+                  <Typography variant="body1" color="text.secondary">
                     {feature.description}
                   </Typography>
-                </FeatureCard>
+                </Box>
               </Grid>
             ))}
           </Grid>
         </Container>
       </Section>
 
-      {/* Community Section - Now moved to sidebar */}
-      <Section sx={{ display: 'none' }}>
-        {/* This section is kept for SEO but visually hidden */}
-        <Container maxWidth="lg">
-          <Typography variant="h3" component="h2" align="center" gutterBottom sx={{ mb: 6, fontWeight: 'bold' }}>
-            Our <GradientText>Community</GradientText> Members
-          </Typography>
-        </Container>
-      </Section>
-
-      {/* CTA Section */}
-      <Section sx={{ 
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        color: '#fff',
-        textAlign: 'center',
-        py: 8,
-      }}>
-        <Container maxWidth="md">
-          <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
-            Ready to Start Your Journey?
-          </Typography>
-          <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
-            Join thousands of users who are already connecting and sharing on LoopTalk.
-          </Typography>
-          <StyledButton
-            component={Link}
-            to="/register"
-            variant="contained"
-            size="large"
+      {/* Login Dialog */}
+      <Dialog 
+        open={isLogin} 
+        onClose={() => setIsLogin(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: '16px',
+            background: 'linear-gradient(145deg, #ffffff 0%, #f9f9f9 100%)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+            overflow: 'hidden',
+          },
+        }}
+      >
+        <Box sx={{ p: 3, position: 'relative' }}>
+          <IconButton 
+            onClick={() => setIsLogin(false)}
             sx={{
-              background: '#fff',
-              color: '#4facfe',
-              '&:hover': {
-                background: 'rgba(255, 255, 255, 0.9)',
-              },
-              fontSize: '1.1rem',
-              px: 5,
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              color: 'text.secondary',
             }}
           >
-            Sign Up Now
-          </StyledButton>
-        </Container>
-      </Section>
-
-      {/* Footer */}
-      <Box component="footer" sx={{ bgcolor: '#f5f5f5', py: 4, textAlign: 'center' }}>
-        <Container maxWidth="lg">
-          <Box sx={{ mb: 2 }}>
-            <IconButton sx={{ color: '#4facfe', mx: 1 }}><Facebook /></IconButton>
-            <IconButton sx={{ color: '#4facfe', mx: 1 }}><Twitter /></IconButton>
-            <IconButton sx={{ color: '#4facfe', mx: 1 }}><LinkedIn /></IconButton>
-            <IconButton sx={{ color: '#4facfe', mx: 1 }}><Instagram /></IconButton>
+            <Close />
+          </IconButton>
+          
+          <Box sx={{ textAlign: 'center', mb: 3 }}>
+            <Typography 
+              variant="h4" 
+              component="h2" 
+              sx={{ 
+                fontWeight: 'bold',
+                mb: 1,
+                background: 'linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Welcome Back!
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Sign in to continue to LoopTalk
+            </Typography>
           </Box>
-          <Typography variant="body2" color="text.secondary">
-            © {new Date().getFullYear()} LoopTalk. All rights reserved.
+          
+          <Box component="form" sx={{ mt: 2 }}>
+            <TextField
+              fullWidth
+              label="Email Address"
+              margin="normal"
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Email color="action" />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              fullWidth
+              label="Password"
+              type="password"
+              margin="normal"
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Lock color="action" />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Button
+              fullWidth
+              variant="contained"
+              size="large"
+              sx={{
+                mt: 3,
+                mb: 2,
+                py: 1.5,
+                background: 'linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #3a7bd5 0%, #00d1ff 100%)',
+                },
+              }}
+            >
+              Sign In
+            </Button>
+          </Box>
+          
+          <Box sx={{ textAlign: 'center', mt: 2 }}>
+            <Button size="small" sx={{ textTransform: 'none' }}>
+              Forgot password?
+            </Button>
+          </Box>
+          
+          <Divider sx={{ my: 3 }}>
+            <Typography variant="caption" color="text.secondary">OR</Typography>
+          </Divider>
+          
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 2 }}>
+            <IconButton sx={{ bgcolor: '#4267B2', color: 'white', '&:hover': { bgcolor: '#3b5998' } }}>
+              <Facebook />
+            </IconButton>
+            <IconButton sx={{ bgcolor: '#1DA1F2', color: 'white', '&:hover': { bgcolor: '#1a91da' } }}>
+              <Twitter />
+            </IconButton>
+            <IconButton sx={{ bgcolor: '#0A66C2', color: 'white', '&:hover': { bgcolor: '#0959a8' } }}>
+              <LinkedIn />
+            </IconButton>
+          </Box>
+          
+          <Typography variant="body2" color="text.secondary" align="center">
+            Don't have an account?{' '}
+            <Button 
+              color="primary" 
+              size="small" 
+              onClick={() => {
+                setIsLogin(false);
+                setRegisterOpen(true);
+              }}
+              sx={{ textTransform: 'none', p: 0, minWidth: 'auto' }}
+            >
+              Sign Up
+            </Button>
           </Typography>
-        </Container>
-      </Box>
+        </Box>
+      </Dialog>
+
+      {/* Register Dialog */}
+      <Register 
+        open={registerOpen} 
+        onClose={() => setRegisterOpen(false)}
+        onSwitchToLogin={() => {
+          setRegisterOpen(false);
+          setIsLogin(true);
+        }}
+      />
     </Box>
   );
 };
